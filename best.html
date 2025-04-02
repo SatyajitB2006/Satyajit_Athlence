@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportGear Pro - Equipment Recommendations</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #4cc9f0;
+            --secondary: #3f37c9;
+            --accent: #7209b7;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--primary-light);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-light);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary-light);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1547347298-4074fc3086f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') center/cover;
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.9), rgba(63, 55, 201, 0.9));
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1543357483-0670e69eac5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') center/cover;
+            z-index: 0;
+        }
+
+        /* Sports Selection Section */
+        .sports-selection {
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: var(--dark);
+            position: relative;
+            display: inline-block;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            bottom: -10px;
+            left: 20%;
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            color: var(--gray);
+            margin-bottom: 40px;
+            font-size: 18px;
+        }
+
+        .sports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .sport-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .sport-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .sport-card-img {
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .sport-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .sport-card:hover .sport-card-img img {
+            transform: scale(1.1);
+        }
+
+        .sport-card-content {
+            padding: 20px;
+        }
+
+        .sport-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .sport-card p {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .sport-card .btn {
+            display: inline-block;
+            padding: 8px 20px;
+            background: var(--primary);
+            color: white;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .sport-card .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        /* Equipment Section */
+        .equipment-section {
+            display: none;
+            padding: 40px 0;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .equipment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .equipment-title {
+            font-size: 28px;
+            color: var(--dark);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            color: var(--secondary);
+            transform: translateX(-5px);
+        }
+
+        .price-filter {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .price-btn {
+            padding: 8px 20px;
+            background: var(--light-gray);
+            border: none;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .price-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .price-btn:hover:not(.active) {
+            background: #ddd;
+        }
+
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .equipment-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .equipment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .equipment-card-img {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .equipment-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .equipment-card:hover .equipment-card-img img {
+            transform: scale(1.05);
+        }
+
+        .equipment-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .equipment-badge.top-rated {
+            background: var(--success);
+        }
+
+        .equipment-badge.best-value {
+            background: var(--accent);
+        }
+
+        .equipment-card-content {
+            padding: 20px;
+        }
+
+        .equipment-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .equipment-card p {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 15px;
+            min-height: 60px;
+        }
+
+        .equipment-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .equipment-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .equipment-rating i {
+            color: var(--warning);
+            font-size: 14px;
+        }
+
+        .equipment-rating span {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .equipment-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 8px;
+            border-radius: 5px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .view-btn {
+            background: var(--primary);
+            color: white;
+        }
+
+        .view-btn:hover {
+            background: var(--secondary);
+        }
+
+        .compare-btn {
+            background: var(--light-gray);
+            color: var(--dark);
+        }
+
+        .compare-btn:hover {
+            background: #ddd;
+        }
+
+        /* Comparison Modal */
+        .comparison-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            transform: translateY(-50px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .modal-content.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            color: var(--dark);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--gray);
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--danger);
+            transform: rotate(90deg);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        .comparison-table th {
+            text-align: left;
+            padding: 15px;
+            background: var(--light-gray);
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table .feature-name {
+            font-weight: 600;
+            color: var(--dark);
+            width: 200px;
+        }
+
+        .comparison-product {
+            text-align: center;
+            width: 25%;
+        }
+
+        .comparison-product-img {
+            height: 150px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .comparison-product-img img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .comparison-product h4 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .comparison-product .price {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .remove-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            background: #d32f2f;
+        }
+
+        .feature-value {
+            color: var(--gray);
+        }
+
+        .feature-value.better {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .feature-value.worse {
+            color: var(--danger);
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+
+        .modal-btn {
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .clear-btn {
+            background: var(--light-gray);
+            color: var(--dark);
+            border: none;
+        }
+
+        .clear-btn:hover {
+            background: #ddd;
+        }
+
+        .buy-now-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+        }
+
+        .buy-now-btn:hover {
+            background: var(--secondary);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .section-title {
+                font-size: 30px;
+            }
+            
+            .equipment-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .comparison-table .feature-name {
+                width: 150px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero {
+                padding: 60px 0;
+            }
+            
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .price-filter {
+                justify-content: center;
+            }
+            
+            .modal-content {
+                margin: 20px;
+                padding: 20px;
+            }
+            
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .sports-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .equipment-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .equipment-actions {
+                flex-direction: column;
+            }
+            
+            .modal-actions {
+                flex-direction: column;
+            }
+            
+            .modal-btn {
+                width: 100%;
+            }
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        .bounce {
+            animation: bounce 1s infinite;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-bg"></div>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-running"></i>
+                <span>SportGear Pro</span>
+            </div>
+            <nav class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">Equipment</a>
+                <a href="#">Coaches</a>
+                <a href="#">Community</a>
+                <a href="#">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-bg"></div>
+            <div class="hero-content">
+                <h1>Find Your Perfect Sports Equipment</h1>
+                <p>Get expert recommendations for top-rated gear tailored to your budget and performance needs. Our AI-powered system analyzes thousands of reviews to bring you the best options.</p>
+            </div>
+        </section>
+
+        <!-- Sports Selection Section -->
+        <section class="sports-selection" id="sports-selection">
+            <h2 class="section-title">Choose Your Sport</h2>
+            <p class="section-subtitle">Select a sport to discover the best equipment recommendations</p>
+            
+            <div class="sports-grid">
+                <div class="sport-card" data-sport="cricket">
+                    <div class="sport-card-img">
+                        <img src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Cricket">
+                    </div>
+                    <div class="sport-card-content">
+                        <h3>Cricket</h3>
+                        <p>Bats, balls, gloves, pads and more for cricket enthusiasts</p>
+                        <a class="btn">Explore Gear</a>
+                    </div>
+                </div>
+                
+                <div class="sport-card" data-sport="football">
+                    <div class="sport-card-img">
+                        <img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1605&q=80" alt="Football">
+                    </div>
+                    <div class="sport-card-content">
+                        <h3>Football</h3>
+                        <p>Cleats, balls, gloves and training equipment</p>
+                        <a class="btn">Explore Gear</a>
+                    </div>
+                </div>
+                
+                <div class="sport-card" data-sport="tennis">
+                    <div class="sport-card-img">
+                        <img src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Tennis">
+                    </div>
+                    <div class="sport-card-content">
+                        <h3>Tennis</h3>
+                        <p>Rackets, balls, shoes and accessories</p>
+                        <a class="btn">Explore Gear</a>
+                    </div>
+                </div>
+                
+                <div class="sport-card" data-sport="basketball">
+                    <div class="sport-card-img">
+                        <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1490&q=80" alt="Basketball">
+                    </div>
+                    <div class="sport-card-content">
+                        <h3>Basketball</h3>
+                        <p>Shoes, balls, hoops and training gear</p>
+                        <a class="btn">Explore Gear</a>
+                    </div>
+                </div>
+                
+                <div class="sport-card" data-sport="golf">
+                    <div class="sport-card-img">
+                        <img src="https://images.unsplash.com/photo-1527525443983-6e60c75fff46?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1405&q=80" alt="Golf">
+                    </div>
+                    <div class="sport-card-content">
+                        <h3>Golf</h3>
+                        <p>Clubs, balls, bags and accessories</p>
+                        <a class="btn">Explore Gear</a>
+                    </div>
+                </div>
+                
+                <div class="sport-card" data-sport="running">
+                    <div class="sport-card-img">
+                        <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Running">
+                    </div>
+                    <div class="sport-card-content">
+                        <h3>Running</h3>
+                        <p>Shoes, watches, apparel and accessories</p>
+                        <a class="btn">Explore Gear</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Equipment Section (Hidden by default) -->
+        <section class="equipment-section" id="equipment-section">
+            <div class="equipment-header">
+                <h2 class="equipment-title" id="equipment-title">Cricket Equipment</h2>
+                <a href="#" class="back-btn" id="back-to-sports">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Sports
+                </a>
+            </div>
+            
+            <div class="price-filter" id="price-filter">
+                <button class="price-btn active" data-price="all">All Prices</button>
+                <button class="price-btn" data-price="0-50">Under $50</button>
+                <button class="price-btn" data-price="50-100">$50 - $100</button>
+                <button class="price-btn" data-price="100-200">$100 - $200</button>
+                <button class="price-btn" data-price="200">$200+</button>
+            </div>
+            
+            <div class="equipment-grid" id="equipment-grid">
+                <!-- Equipment will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Comparison Modal (Hidden by default) -->
+        <div class="comparison-modal" id="comparison-modal">
+            <div class="modal-content" id="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Compare Equipment</h3>
+                    <button class="close-modal" id="close-modal">&times;</button>
+                </div>
+                
+                <table class="comparison-table" id="comparison-table">
+                    <!-- Comparison content will be populated by JavaScript -->
+                </table>
+                
+                <div class="modal-actions">
+                    <button class="modal-btn clear-btn" id="clear-comparison">
+                        <i class="fas fa-trash-alt"></i>
+                        Clear Comparison
+                    </button>
+                    <button class="modal-btn buy-now-btn">
+                        <i class="fas fa-shopping-cart"></i>
+                        Buy Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Equipment Data
+        const equipmentData = {
+            cricket: {
+                name: "Cricket",
+                equipment: [
+                    {
+                        id: 1,
+                        name: "MRF Genius Grand Edition Bat",
+                        description: "Premium English willow bat with perfect weight balance for aggressive batsmen",
+                        price: 299,
+                        rating: 4.8,
+                        image: "https://m.media-amazon.com/images/I/61gV+8vJkGL._AC_UF1000,1000_QL80_.jpg",
+                        category: "Bat",
+                        features: {
+                            "Material": "English Willow",
+                            "Weight": "1180-1220g",
+                            "Grip": "Premium Rubber",
+                            "Best For": "Aggressive Batsmen",
+                            "Warranty": "6 Months"
+                        },
+                        badge: "top-rated"
+                    },
+                    {
+                        id: 2,
+                        name: "Kookaburra Cricket Ball",
+                        description: "Professional grade leather ball used in international matches",
+                        price: 89,
+                        rating: 4.7,
+                        image: "https://m.media-amazon.com/images/I/81QOZ+6U1VL._AC_UF1000,1000_QL80_.jpg",
+                        category: "Ball",
+                        features: {
+                            "Type": "Leather",
+                            "Weight": "155.9-163g",
+                            "Color": "Red",
+                            "Best For": "Professional Matches",
+                            "Durability": "High"
+                        },
+                        badge: "top-rated"
+                    },
+                    {
+                        id: 3,
+                        name: "SS Ton Cricket Bat",
+                        description: "Quality Kashmir willow bat perfect for club level cricket",
+                        price: 79,
+                        rating: 4.3,
+                        image: "https://m.media-amazon.com/images/I/61X9Y6+qWAL._AC_UF1000,1000_QL80_.jpg",
+                        category: "Bat",
+                        features: {
+                            "Material": "Kashmir Willow",
+                            "Weight": "1150-1200g",
+                            "Grip": "Standard Rubber",
+                            "Best For": "Club Level",
+                            "Warranty": "3 Months"
+                        },
+                        badge: "best-value"
+                    },
+                    {
+                        id: 4,
+                        name: "GM Original Cricket Gloves",
+                        description: "Premium batting gloves with extra padding for maximum protection",
+                        price: 65,
+                        rating: 4.5,
+                        image: "https://m.media-amazon.com/images/I/71JQYJjZz8L._AC_UF1000,1000_QL80_.jpg",
+                        category: "Gloves",
+                        features: {
+                            "Material": "Premium Leather",
+                            "Size": "Medium",
+                            "Padding": "Extra",
+                            "Best For": "Batting",
+                            "Warranty": "6 Months"
+                        }
+                    },
+                    {
+                        id: 5,
+                        name: "New Balance DC1080 Batting Pads",
+                        description: "Lightweight batting pads with maximum protection and comfort",
+                        price: 95,
+                        rating: 4.6,
+                        image: "https://m.media-amazon.com/images/I/61+Q4t5N9GL._AC_UF1000,1000_QL80_.jpg",
+                        category: "Pads",
+                        features: {
+                            "Material": "High Density Foam",
+                            "Weight": "Light",
+                            "Protection": "Maximum",
+                            "Best For": "All Players",
+                            "Warranty": "1 Year"
+                        }
+                    },
+                    {
+                        id: 6,
+                        name: "Kookaburra Kahuna Bat",
+                        description: "Intermediate level bat with perfect balance of power and control",
+                        price: 199,
+                        rating: 4.4,
+                        image: "https://m.media-amazon.com/images/I/61vZ5z+ZJVL._AC_UF1000,1000_QL80_.jpg",
+                        category: "Bat",
+                        features: {
+                            "Material": "English Willow",
+                            "Weight": "1160-1200g",
+                            "Grip": "Premium Rubber",
+                            "Best For": "Intermediate Players",
+                            "Warranty": "6 Months"
+                        }
+                    }
+                ]
+            },
+            football: {
+                name: "Football",
+                equipment: [
+                    {
+                        id: 7,
+                        name: "Nike Premier League Flight Ball",
+                        description: "Official match ball of the English Premier League with Nike Aerowsculpt technology",
+                        price: 149,
+                        rating: 4.9,
+                        image: "https://m.media-amazon.com/images/I/71QZ5J+MM3L._AC_UF1000,1000_QL80_.jpg",
+                        category: "Ball",
+                        features: {
+                            "Material": "Thermo-bonded Polyurethane",
+                            "Size": "5",
+                            "Weight": "410-450g",
+                            "Best For": "Professional Matches",
+                            "Warranty": "1 Year"
+                        },
+                        badge: "top-rated"
+                    },
+                    {
+                        id: 8,
+                        name: "Adidas Predator Edge Cleats",
+                        description: "Premium football boots with Demonskin technology for enhanced control",
+                        price: 249,
+                        rating: 4.7,
+                        image: "https://m.media-amazon.com/images/I/71dGXyJpVzL._AC_UF1000,1000_QL80_.jpg",
+                        category: "Cleats",
+                        features: {
+                            "Material": "Primeknit+",
+                            "Studs": "Firm Ground",
+                            "Weight": "220g",
+                            "Best For": "Midfielders",
+                            "Warranty": "6 Months"
+                        },
+                        badge: "top-rated"
+                    },
+                    {
+                        id: 9,
+                        name: "Puma Future Z 1.2 FG/AG",
+                        description: "Dynamic fit football boots with FUZIONFIT+ adaptive compression band",
+                        price: 179,
+                        rating: 4.6,
+                        image: "https://m.media-amazon.com/images/I/61gV+8vJkGL._AC_UF1000,1000_QL80_.jpg",
+                        category: "Cleats",
+                        features: {
+                            "Material": "Kangaroo Leather",
+                            "Studs": "Firm Ground",
+                            "Weight": "210g",
+                            "Best For": "Creative Players",
+                            "Warranty": "6 Months"
+                        }
+                    },
+                    {
+                        id: 10,
+                        name: "Select Numero 10 Training Ball",
+                        description: "High-quality training ball with butyl bladder for consistent performance",
+                        price: 39,
+                        rating: 4.4,
+                        image: "https://m.media-amazon.com/images/I/71JQYJjZz8L._AC_UF1000,1000_QL80_.jpg",
+                        category: "Ball",
+                        features: {
+                            "Material": "PU Leather",
+                            "Size": "5",
+                            "Weight": "410-450g",
+                            "Best For": "Training",
+                            "Warranty": "6 Months"
+                        },
+                        badge: "best-value"
+                    },
+                    {
+                        id: 11,
+                        name: "Nike Mercurial Vapor 14 Academy",
+                        description: "Lightweight boots with ACC technology for all-weather control",
+                        price: 89,
+                        rating: 4.5,
+                        image: "https://m.media-amazon.com/images/I/61+Q4t5N9GL._AC_UF1000,1000_QL80_.jpg",
+                        category: "Cleats",
+                        features: {
+                            "Material": "Synthetic Leather",
+                            "Studs": "Firm Ground",
+                            "Weight": "190g",
+                            "Best For": "Wingers",
+                            "Warranty": "6 Months"
+                        }
+                    },
+                    {
+                        id: 12,
+                        name: "Adidas Tiro League Training Pants",
+                        description: "Comfortable training pants with moisture-wicking fabric",
+                        price: 45,
+                        rating: 4.3,
+                        image: "https://m.media-amazon.com/images/I/61vZ5z+ZJVL._AC_UF1000,1000_QL80_.jpg",
+                        category: "Apparel",
+                        features: {
+                            "Material": "Polyester",
+                            "Fit": "Regular",
+                            "Features": "Moisture-wicking",
+                            "Best For": "Training",
+                            "Warranty": "None"
+                        }
+                    }
+                ]
+            },
+            tennis: {
+                name: "Tennis",
+                equipment: [
+                    {
+                        id: 13,
+                        name: "Wilson Pro Staff RF97 v13",
+                        description: "Roger Federer's signature racket with braided graphite construction",
+                        price: 249,
+                        rating: 4.8,
+                        image: "https://m.media-amazon.com/images/I/61gV+8vJkGL._AC_UF1000,1000_QL80_.jpg",
+                        category: "Racket",
+                        features: {
+                            "Head Size": "97 sq in",
+                            "Weight": "340g",
+                            "Balance": "9 pts HL",
+                            "String Pattern": "16x19",
+                            "Best For": "Advanced Players"
+                        },
+                        badge: "top-rated"
+                    },
+                    {
+                        id: 14,
+                        name: "Babolat Pure Drive 2021",
+                        description: "Powerful racket with Cortex Pure Feel for reduced vibration",
+                        price: 229,
+                        rating: 4.7,
+                        image: "https://m.media-amazon.com/images/I/81QOZ+6U1VL._AC_UF1000,1000_QL80_.jpg",
+                        category: "Racket",
+                        features: {
+                            "Head Size": "100 sq in",
+                            "Weight": "300g",
+                            "Balance": "4 pts HL",
+                            "String Pattern": "16x19",
+                            "Best For": "Intermediate to Advanced"
+                        }
+                    },
+                    {
+                        id: 15,
+                        name: "Wilson US Open Tennis Balls",
+                        description: "Official ball of the US Open with Dura-Weave felt",
+                        price: 25,
+                        rating: 4.6,
+                        image: "https://m.media-amazon.com/images/I/61X9Y6+qWAL._AC_UF1000,1000_QL80_.jpg",
+                        category: "Balls",
+                        features: {
+                            "Type": "Extra Duty",
+                            "Quantity": "3",
+                            "Pressure": "14psi",
+                            "Best For": "Hard Courts",
+                            "Durability": "High"
+                        },
+                        badge: "top-rated"
+                    },
+                    {
+                        id: 16,
+                        name: "Head Ti.S6 Tennis Racket",
+                        description: "Lightweight racket with oversized head for power and comfort",
+                        price: 99,
+                        rating: 4.4,
+                        image: "https://m.media-amazon.com/images/I/71JQYJjZz8L._AC_UF1000,1000_QL80_.jpg",
+                        category: "Racket",
+                        features: {
+                            "Head Size": "115 sq in",
+                            "Weight": "240g",
+                            "Balance": "Even",
+                            "String Pattern": "16x19",
+                            "Best For": "Beginners"
+                        },
+                        badge: "best-value"
+                    },
+                    {
+                        id: 17,
+                        name: "NikeCourt Air Zoom Vapor Cage 4",
+                        description: "Premium tennis shoes with Zoom Air cushioning",
+                        price: 129,
+                        rating: 4.5,
+                        image: "https://m.media-amazon.com/images/I/61+Q4t5N9GL._AC_UF1000,1000_QL80_.jpg",
+                        category: "Shoes",
+                        features: {
+                            "Material": "Synthetic",
+                            "Closure": "Lace-up",
+                            "Cushioning": "Zoom Air",
+                            "Best For": "All Court",
+                            "Warranty": "6 Months"
+                        }
+                    },
+                    {
+                        id: 18,
+                        name: "Yonex Poly Tour Pro String",
+                        description: "High-performance polyester string for control and durability",
+                        price: 12,
+                        rating: 4.3,
+                        image: "https://m.media-amazon.com/images/I/61vZ5z+ZJVL._AC_UF1000,1000_QL80_.jpg",
+                        category: "Accessories",
+                        features: {
+                            "Material": "Polyester",
+                            "Gauge": "1.25mm",
+                            "Tension": "45-60 lbs",
+                            "Best For": "Control",
+                            "Durability": "High"
+                        }
+                    }
+                ]
+            }
+        };
+
+        // DOM Elements
+        const sportsSelection = document.getElementById('sports-selection');
+        const equipmentSection = document.getElementById('equipment-section');
+        const equipmentTitle = document.getElementById('equipment-title');
+        const backToSportsBtn = document.getElementById('back-to-sports');
+        const priceFilter = document.getElementById('price-filter');
+        const equipmentGrid = document.getElementById('equipment-grid');
+        const comparisonModal = document.getElementById('comparison-modal');
+        const modalContent = document.getElementById('modal-content');
+        const closeModalBtn = document.getElementById('close-modal');
+        const comparisonTable = document.getElementById('comparison-table');
+        const clearComparisonBtn = document.getElementById('clear-comparison');
+
+        // State Variables
+        let currentSport = '';
+        let currentPriceFilter = 'all';
+        let comparisonItems = [];
+
+        // Event Listeners
+        document.querySelectorAll('.sport-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const sport = card.getAttribute('data-sport');
+                showEquipmentSection(sport);
+            });
+        });
+
+        backToSportsBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSportsSelection();
+        });
+
+        priceFilter.addEventListener('click', (e) => {
+            if (e.target.classList.contains('price-btn')) {
+                document.querySelectorAll('.price-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                e.target.classList.add('active');
+                currentPriceFilter = e.target.getAttribute('data-price');
+                renderEquipment();
+            }
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            closeComparisonModal();
+        });
+
+        clearComparisonBtn.addEventListener('click', () => {
+            comparisonItems = [];
+            renderComparisonTable();
+            closeComparisonModal();
+        });
+
+        // Close modal when clicking outside
+        comparisonModal.addEventListener('click', (e) => {
+            if (e.target === comparisonModal) {
+                closeComparisonModal();
+            }
+        });
+
+        // Functions
+        function showSportsSelection() {
+            sportsSelection.style.display = 'block';
+            equipmentSection.style.display = 'none';
+            currentSport = '';
+        }
+
+        function showEquipmentSection(sport) {
+            currentSport = sport;
+            
+            sportsSelection.style.display = 'none';
+            equipmentSection.style.display = 'block';
+            
+            equipmentTitle.textContent = `${equipmentData[sport].name} Equipment`;
+            
+            // Reset price filter
+            document.querySelectorAll('.price-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector('.price-btn[data-price="all"]').classList.add('active');
+            currentPriceFilter = 'all';
+            
+            renderEquipment();
+        }
+
+        function renderEquipment() {
+            equipmentGrid.innerHTML = '';
+            
+            let filteredEquipment = [...equipmentData[currentSport].equipment];
+            
+            // Apply price filter
+            if (currentPriceFilter !== 'all') {
+                const [min, max] = currentPriceFilter.split('-').map(Number);
+                filteredEquipment = filteredEquipment.filter(item => {
+                    if (currentPriceFilter === '200') {
+                        return item.price >= 200;
+                    } else {
+                        return item.price >= min && item.price <= max;
+                    }
+                });
+            }
+            
+            if (filteredEquipment.length === 0) {
+                equipmentGrid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+                        <i class="fas fa-search" style="font-size: 50px; color: var(--gray); margin-bottom: 20px;"></i>
+                        <h3>No equipment found in this price range</h3>
+                        <p>Try adjusting your price filter</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            filteredEquipment.forEach(item => {
+                const stars = Array(Math.floor(item.rating)).fill('<i class="fas fa-star"></i>').join('');
+                const hasHalfStar = item.rating % 1 >= 0.5;
+                const starRating = stars + (hasHalfStar ? '<i class="fas fa-star-half-alt"></i>' : '');
+                
+                const equipmentCard = document.createElement('div');
+                equipmentCard.className = 'equipment-card';
+                equipmentCard.innerHTML = `
+                    <div class="equipment-card-img">
+                        <img src="${item.image}" alt="${item.name}">
+                        ${item.badge ? `<span class="equipment-badge ${item.badge}">${item.badge === 'top-rated' ? 'Top Rated' : 'Best Value'}</span>` : ''}
+                    </div>
+                    <div class="equipment-card-content">
+                        <h3>${item.name}</h3>
+                        <p>${item.description}</p>
+                        <div class="equipment-price">$${item.price}</div>
+                        <div class="equipment-rating">
+                            ${starRating}
+                            <span>${item.rating}/5</span>
+                        </div>
+                        <div class="equipment-actions">
+                            <button class="action-btn view-btn" data-id="${item.id}">
+                                <i class="fas fa-eye"></i>
+                                View
+                            </button>
+                            <button class="action-btn compare-btn" data-id="${item.id}">
+                                <i class="fas fa-exchange-alt"></i>
+                                Compare
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                equipmentCard.querySelector('.view-btn').addEventListener('click', () => {
+                    // In a real app, this would open a detailed view
+                    alert(`Viewing details for ${item.name}`);
+                });
+                
+                equipmentCard.querySelector('.compare-btn').addEventListener('click', () => {
+                    addToComparison(item);
+                });
+                
+                equipmentGrid.appendChild(equipmentCard);
+            });
+        }
+
+        function addToComparison(item) {
+            if (comparisonItems.some(i => i.id === item.id)) {
+                alert('This item is already in comparison');
+                return;
+            }
+            
+            if (comparisonItems.length >= 4) {
+                alert('You can compare up to 4 items at once');
+                return;
+            }
+            
+            comparisonItems.push(item);
+            renderComparisonTable();
+            openComparisonModal();
+        }
+
+        function renderComparisonTable() {
+            if (comparisonItems.length === 0) {
+                comparisonTable.innerHTML = `
+                    <tr>
+                        <td colspan="${comparisonItems.length + 1}" style="text-align: center; padding: 40px;">
+                            <i class="fas fa-exchange-alt" style="font-size: 40px; color: var(--gray); margin-bottom: 20px;"></i>
+                            <h3>No items to compare</h3>
+                            <p>Add items to comparison by clicking the "Compare" button</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            // Get all unique features from all items
+            const allFeatures = new Set();
+            comparisonItems.forEach(item => {
+                Object.keys(item.features).forEach(feature => {
+                    allFeatures.add(feature);
+                });
+            });
+            
+            // Create table header
+            let tableHTML = `
+                <thead>
+                    <tr>
+                        <th>Features</th>
+                        ${comparisonItems.map(item => `
+                            <th class="comparison-product">
+                                <div class="comparison-product-img">
+                                    <img src="${item.image}" alt="${item.name}">
+                                </div>
+                                <h4>${item.name}</h4>
+                                <div class="price">$${item.price}</div>
+                                <button class="remove-btn" data-id="${item.id}">
+                                    <i class="fas fa-times"></i>
+                                    Remove
+                                </button>
+                            </th>
+                        `).join('')}
+                    </tr>
+                </thead>
+                <tbody>
+            `;
+            
+            // Add rows for each feature
+            Array.from(allFeatures).forEach(feature => {
+                tableHTML += `
+                    <tr>
+                        <td class="feature-name">${feature}</td>
+                        ${comparisonItems.map(item => {
+                            const value = item.features[feature] || 'N/A';
+                            // Simple comparison logic (in a real app, this would be more sophisticated)
+                            const allValues = comparisonItems.map(i => i.features[feature]).filter(v => v);
+                            const isBest = allValues.every(v => v === value || typeof v !== typeof value || String(v) <= String(value));
+                            const isWorst = allValues.every(v => v === value || typeof v !== typeof value || String(v) >= String(value));
+                            
+                            return `
+                                <td class="feature-value ${isBest && comparisonItems.length > 1 ? 'better' : ''} ${isWorst && comparisonItems.length > 1 && !isBest ? 'worse' : ''}">
+                                    ${value}
+                                </td>
+                            `;
+                        }).join('')}
+                    </tr>
+                `;
+            });
+            
+            // Add price row
+            tableHTML += `
+                <tr>
+                    <td class="feature-name">Price</td>
+                    ${comparisonItems.map(item => {
+                        const isBest = comparisonItems.every(i => i.price >= item.price);
+                        const isWorst = comparisonItems.every(i => i.price <= item.price);
+                        
+                        return `
+                            <td class="feature-value ${isBest && comparisonItems.length > 1 ? 'better' : ''} ${isWorst && comparisonItems.length > 1 && !isBest ? 'worse' : ''}">
+                                $${item.price}
+                            </td>
+                        `;
+                    }).join('')}
+                </tr>
+            `;
+            
+            // Add rating row
+            tableHTML += `
+                <tr>
+                    <td class="feature-name">Rating</td>
+                    ${comparisonItems.map(item => {
+                        const isBest = comparisonItems.every(i => i.rating <= item.rating);
+                        const isWorst = comparisonItems.every(i => i.rating >= item.rating);
+                        
+                        return `
+                            <td class="feature-value ${isBest && comparisonItems.length > 1 ? 'better' : ''} ${isWorst && comparisonItems.length > 1 && !isBest ? 'worse' : ''}">
+                                ${item.rating}/5
+                            </td>
+                        `;
+                    }).join('')}
+                </tr>
+            `;
+            
+            tableHTML += `</tbody>`;
+            comparisonTable.innerHTML = tableHTML;
+            
+            // Add event listeners to remove buttons
+            comparisonTable.querySelectorAll('.remove-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = parseInt(btn.getAttribute('data-id'));
+                    comparisonItems = comparisonItems.filter(item => item.id !== id);
+                    renderComparisonTable();
+                    e.stopPropagation();
+                });
+            });
+        }
+
+        function openComparisonModal() {
+            comparisonModal.style.display = 'block';
+            setTimeout(() => {
+                modalContent.classList.add('active');
+            }, 10);
+        }
+
+        function closeComparisonModal() {
+            modalContent.classList.remove('active');
+            setTimeout(() => {
+                comparisonModal.style.display = 'none';
+            }, 300);
+        }
+
+        // Initialize
+        showSportsSelection();
+    </script>
+</body>
+</html>

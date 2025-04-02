@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Athlence - Grievance System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .grievance-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .info-card {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInLeft 0.8s ease-out;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .info-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-card h2 i {
+            color: var(--secondary-color);
+        }
+
+        .report-form-container {
+            flex: 2;
+            min-width: 300px;
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            animation: fadeInRight 0.8s ease-out;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-header h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-header p {
+            color: #7f8c8d;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .radio-option {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .radio-option input {
+            display: none;
+        }
+
+        .radio-option label {
+            display: block;
+            padding: 12px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .radio-option input:checked + label {
+            background: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        .confidentiality-note {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--secondary-color);
+            animation: pulse 2s infinite;
+        }
+
+        .confidentiality-note p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--dark-color);
+        }
+
+        .confidentiality-note i {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .success-message i {
+            font-size: 4rem;
+            color: var(--success-color);
+            margin-bottom: 1rem;
+            animation: bounce 1s;
+        }
+
+        .success-message h2 {
+            color: var(--success-color);
+            margin-bottom: 1rem;
+        }
+
+        .success-message p {
+            color: #7f8c8d;
+            margin-bottom: 1.5rem;
+        }
+
+        .back-btn {
+            background: var(--light-color);
+            color: var(--dark-color);
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #dfe6e9;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+            margin-top: 2rem;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.2);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .grievance-section {
+                flex-direction: column;
+            }
+
+            .info-card, .report-form-container {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-shield-alt"></i> Sports Grievance System</h1>
+            <p>Report physical abuse, bribery, and misconduct confidentially to help maintain a fair and safe sporting environment for all.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="grievance-section">
+            <div class="info-card">
+                <h2><i class="fas fa-info-circle"></i> What You Can Report</h2>
+                <ul style="list-style-type: none;">
+                    <li style="margin-bottom: 10px;"><i class="fas fa-user-shield" style="color: var(--secondary-color); margin-right: 10px;"></i> Physical or emotional abuse</li>
+                    <li style="margin-bottom: 10px;"><i class="fas fa-money-bill-wave" style="color: var(--secondary-color); margin-right: 10px;"></i> Bribery or match-fixing</li>
+                    <li style="margin-bottom: 10px;"><i class="fas fa-exclamation-triangle" style="color: var(--secondary-color); margin-right: 10px;"></i> Discrimination or harassment</li>
+                    <li style="margin-bottom: 10px;"><i class="fas fa-balance-scale" style="color: var(--secondary-color); margin-right: 10px;"></i> Unfair selection practices</li>
+                    <li style="margin-bottom: 10px;"><i class="fas fa-flask" style="color: var(--secondary-color); margin-right: 10px;"></i> Doping violations</li>
+                </ul>
+
+                <h2 style="margin-top: 2rem;"><i class="fas fa-lock"></i> Your Safety</h2>
+                <p>All reports are handled with the strictest confidentiality. Your identity will be protected throughout the process.</p>
+            </div>
+
+            <div class="report-form-container" id="reportForm">
+                <div class="form-header">
+                    <h2>File a Grievance</h2>
+                    <p>Help us keep sports clean and fair</p>
+                </div>
+
+                <div class="confidentiality-note">
+                    <p><i class="fas fa-lock"></i> This form is completely confidential. Your identity will not be disclosed without your consent.</p>
+                </div>
+
+                <form id="grievanceForm">
+                    <div class="form-group">
+                        <label for="name">Your Name (Optional)</label>
+                        <input type="text" id="name" name="name" placeholder="If you wish to remain anonymous, leave this blank">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Contact Email (Optional)</label>
+                        <input type="email" id="email" name="email" placeholder="Only needed if you want us to follow up with you">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sport">Sport/Discipline</label>
+                        <input type="text" id="sport" name="sport" placeholder="e.g., Football, Athletics, Swimming" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="incidentType">Type of Incident</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="physicalAbuse" name="incidentType" value="Physical Abuse" required>
+                                <label for="physicalAbuse">Physical Abuse</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="bribery" name="incidentType" value="Bribery">
+                                <label for="bribery">Bribery</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="misconduct" name="incidentType" value="Misconduct">
+                                <label for="misconduct">Misconduct</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="other" name="incidentType" value="Other">
+                                <label for="other">Other</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="date">Date of Incident (Approximate)</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location">Location of Incident</label>
+                        <input type="text" id="location" name="location" placeholder="City, Venue, or Competition" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Detailed Description</label>
+                        <textarea id="description" name="description" placeholder="Please provide as much detail as possible about what happened, who was involved, and any witnesses..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="evidence">Evidence Available (Optional)</label>
+                        <input type="text" id="evidence" name="evidence" placeholder="Photos, videos, documents, etc. (We may contact you for these)">
+                    </div>
+
+                    <button type="submit" class="submit-btn">Submit Report Securely</button>
+                </form>
+            </div>
+
+            <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle"></i>
+                <h2>Report Submitted Successfully</h2>
+                <p>Thank you for helping to maintain integrity in sports. Your report has been received and will be reviewed by our ethics committee.</p>
+                <p>If you provided contact information, you may hear from us within 5-7 working days.</p>
+                <button class="back-btn" id="backBtn">Submit Another Report</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2023 Sport Community Grievance System. All rights reserved.</p>
+            <p><i class="fas fa-phone"></i> Emergency Hotline: 1-800-SPORT-HELP</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const grievanceForm = document.getElementById('grievanceForm');
+            const reportForm = document.getElementById('reportForm');
+            const successMessage = document.getElementById('successMessage');
+            const backBtn = document.getElementById('backBtn');
+
+            // Form submission
+            grievanceForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Simulate form processing
+                setTimeout(function() {
+                    // Hide form and show success message
+                    reportForm.style.display = 'none';
+                    successMessage.style.display = 'block';
+                    
+                    // Reset form (in a real app, this would be after actual submission)
+                    grievanceForm.reset();
+                }, 1000);
+            });
+
+            // Back button to show form again
+            backBtn.addEventListener('click', function() {
+                successMessage.style.display = 'none';
+                reportForm.style.display = 'block';
+            });
+
+            // Animate form elements as they come into view
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.info-card, .report-form-container');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.2;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateX(0)';
+                    }
+                });
+            };
+
+            // Set initial state for animation
+            document.querySelector('.info-card').style.opacity = '0';
+            document.querySelector('.info-card').style.transform = 'translateX(-20px)';
+            document.querySelector('.report-form-container').style.opacity = '0';
+            document.querySelector('.report-form-container').style.transform = 'translateX(20px)';
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Run once on load in case elements are already in view
+        });
+
+        // In a real application, you would add code here to actually submit the form data securely
+        // This might involve sending it to a server endpoint with proper authentication and encryption
+    </script>
+</body>
+</html>

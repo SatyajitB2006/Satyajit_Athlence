@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Elite Sports Health Network | Hospital Collaboration System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Montserrat:wght@800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e4bb3;
+            --secondary: #3b82f6;
+            --accent: #ef4444;
+            --accent-dark: #dc2626;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --glass: rgba(255, 255, 255, 0.2);
+            --max-width: 1400px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f9ff;
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header with Parallax */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            color: white;
+            padding: 6rem 1rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+        }
+
+        /* Floating Particles */
+        .particle {
+            position: absolute;
+            background: rgba(255,255,255,0.7);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            width: 100%;
+        }
+
+        /* Section Titles */
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            color: var(--primary);
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            margin: 1rem auto 0;
+            border-radius: 2px;
+        }
+
+        /* Hospital Cards */
+        .hospital-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .hospital-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hospital-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .hospital-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .hospital-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .hospital-card:hover .hospital-img img {
+            transform: scale(1.1);
+        }
+
+        .hospital-info {
+            padding: 1.5rem;
+        }
+
+        .hospital-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .hospital-info p {
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+
+        .hospital-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* Interactive Map */
+        .map-container {
+            height: 500px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 3rem 0;
+            position: relative;
+        }
+        
+        #hospitalMap {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .map-controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .map-legend {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(255,255,255,0.9);
+            padding: 10px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            font-size: 0.9rem;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        /* Emergency Section */
+        .emergency-section {
+            background: linear-gradient(135deg, var(--accent), #f87171);
+            color: white;
+            border-radius: 15px;
+            padding: 3rem;
+            margin: 3rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: pulse 2s infinite alternate;
+        }
+
+        .emergency-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--accent);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-accent:hover {
+            background: var(--accent-dark);
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.02); }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 4rem 1rem;
+            }
+            
+            .hospital-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .map-container {
+                height: 350px;
+            }
+            
+            .emergency-section {
+                padding: 2rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 3rem 1rem;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <!-- Floating Particles -->
+        <div class="particle" style="width: 10px; height: 10px; top: 10%; left: 20%; animation-delay: 0s;"></div>
+        <div class="particle" style="width: 15px; height: 15px; top: 30%; left: 70%; animation-delay: 2s;"></div>
+        <div class="particle" style="width: 8px; height: 8px; top: 60%; left: 40%; animation-delay: 4s;"></div>
+        
+        <div class="container">
+            <h1>ELITE ATHLETE MEDICAL NETWORK</h1>
+            <p>Direct collaborations with top-tier hospitals for immediate sports injury care and emergency support</p>
+            <button class="btn btn-primary" id="findHospitalsBtn">
+                <i class="fas fa-hospital"></i> Find Nearby Hospitals
+            </button>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- Partner Hospitals -->
+        <div class="section-title">
+            <h2>Verified Hospital Partners</h2>
+        </div>
+
+        <div class="hospital-grid">
+            <!-- Hospital 1 -->
+            <div class="hospital-card">
+                <div class="hospital-img">
+                    <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="City General Hospital">
+                </div>
+                <div class="hospital-info">
+                    <h3>City General Hospital</h3>
+                    <p>24/7 sports injury center with dedicated orthopedic specialists</p>
+                    <div class="hospital-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> 2.5 km away</span>
+                        <span><i class="fas fa-clock"></i> Avg. wait: 15 min</span>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                        <i class="fas fa-phone-alt"></i> Emergency Contact
+                    </button>
+                </div>
+            </div>
+
+            <!-- Hospital 2 -->
+            <div class="hospital-card">
+                <div class="hospital-img">
+                    <img src="https://images.unsplash.com/photo-1581595219315-a187dd40c322?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="SportsMed Center">
+                </div>
+                <div class="hospital-info">
+                    <h3>SportsMed Center</h3>
+                    <p>Specialized in athlete rehabilitation and concussion management</p>
+                    <div class="hospital-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> 5.1 km away</span>
+                        <span><i class="fas fa-clock"></i> Avg. wait: 10 min</span>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                        <i class="fas fa-phone-alt"></i> Emergency Contact
+                    </button>
+                </div>
+            </div>
+
+            <!-- Hospital 3 -->
+            <div class="hospital-card">
+                <div class="hospital-img">
+                    <img src="https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="University Medical">
+                </div>
+                <div class="hospital-info">
+                    <h3>University Medical</h3>
+                    <p>Advanced imaging and surgical facilities for sports injuries</p>
+                    <div class="hospital-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> 7.3 km away</span>
+                        <span><i class="fas fa-clock"></i> Avg. wait: 25 min</span>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                        <i class="fas fa-phone-alt"></i> Emergency Contact
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Map -->
+        <div class="section-title">
+            <h2>Hospital Network Map</h2>
+        </div>
+
+        <div class="map-container">
+            <div id="hospitalMap"></div>
+            <div class="map-controls">
+                <button id="locateBtn" class="btn btn-primary" style="padding: 8px 12px; font-size: 0.9rem;">
+                    <i class="fas fa-location-arrow"></i> My Location
+                </button>
+            </div>
+            <div class="map-legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #EF4444;"></div>
+                    <span>Emergency Centers</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #3B82F6;"></div>
+                    <span>Sports Medicine</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #10B981;"></div>
+                    <span>Rehabilitation</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Emergency Section -->
+        <div class="emergency-section">
+            <h2 style="font-size: 2rem; margin-bottom: 1rem;">EMERGENCY MEDICAL SUPPORT</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem;">Immediate coordination with trauma centers for critical injuries</p>
+            <button class="btn btn-accent" style="font-size: 1.1rem; padding: 15px 30px;">
+                <i class="fas fa-ambulance"></i> ACTIVATE EMERGENCY PROTOCOL
+            </button>
+        </div>
+    </div>
+
+    <!-- Load Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap&libraries=places,geometry" async defer></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create floating particles
+            function createParticles() {
+                const hero = document.querySelector('.hero');
+                for (let i = 0; i < 20; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.width = `${Math.random() * 15 + 5}px`;
+                    particle.style.height = particle.style.width;
+                    particle.style.left = `${Math.random() * 100}%`;
+                    particle.style.top = `${Math.random() * 100}%`;
+                    particle.style.animationDelay = `${Math.random() * 10}s`;
+                    particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+                    hero.appendChild(particle);
+                }
+            }
+            createParticles();
+
+            // Animate hospital cards on scroll
+            function animateOnScroll() {
+                const cards = document.querySelectorAll('.hospital-card');
+                cards.forEach((card, index) => {
+                    const cardPosition = card.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.3;
+                    
+                    if (cardPosition < screenPosition) {
+                        card.style.animation = `fadeInUp 0.5s ease-out ${index * 0.1}s forwards`;
+                    }
+                });
+            }
+
+            // Set initial state
+            document.querySelectorAll('.hospital-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+            });
+
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Run once on load
+
+            // Button interactions
+            document.getElementById('findHospitalsBtn').addEventListener('click', function() {
+                alert("In a full implementation, this would geolocate and show nearest hospitals");
+            });
+
+            // Emergency button effect
+            const emergencyBtn = document.querySelector('.emergency-section .btn');
+            emergencyBtn.addEventListener('mouseover', function() {
+                this.style.transform = 'scale(1.05)';
+            });
+            emergencyBtn.addEventListener('mouseout', function() {
+                this.style.transform = 'scale(1)';
+            });
+            emergencyBtn.addEventListener('click', function() {
+                alert("EMERGENCY PROTOCOL ACTIVATED:\n\n1. Notifying nearest trauma center\n2. Alerting team physicians\n3. Preparing OR if needed");
+            });
+        });
+
+        // Google Maps Implementation
+        let map;
+        let infoWindow;
+        let markers = [];
+        
+        function initMap() {
+            // Default center (San Francisco)
+            const center = { lat: 37.7749, lng: -122.4194 };
+            
+            // Create map
+            map = new google.maps.Map(document.getElementById("hospitalMap"), {
+                zoom: 12,
+                center: center,
+                styles: [
+                    {
+                        featureType: "poi.medical",
+                        elementType: "labels.icon",
+                        stylers: [{ visibility: "on" }]
+                    },
+                    {
+                        featureType: "poi.hospital",
+                        elementType: "labels.icon",
+                        stylers: [{ visibility: "on" }]
+                    }
+                ]
+            });
+            
+            infoWindow = new google.maps.InfoWindow();
+            
+            // Add hospital markers
+            const hospitals = [
+                {
+                    name: "City General Hospital",
+                    position: { lat: 37.7749, lng: -122.4194 },
+                    type: "emergency",
+                    address: "123 Medical Way, San Francisco",
+                    phone: "(555) 123-4567"
+                },
+                {
+                    name: "SportsMed Center",
+                    position: { lat: 37.7849, lng: -122.4294 },
+                    type: "sports",
+                    address: "456 Athlete Blvd, San Francisco",
+                    phone: "(555) 234-5678"
+                },
+                {
+                    name: "University Medical",
+                    position: { lat: 37.7649, lng: -122.4094 },
+                    type: "rehab",
+                    address: "789 College Ave, San Francisco",
+                    phone: "(555) 345-6789"
+                }
+            ];
+            
+            hospitals.forEach(hospital => {
+                let iconUrl;
+                
+                switch(hospital.type) {
+                    case "emergency":
+                        iconUrl = "https://maps.google.com/mapfiles/ms/icons/red-dot.png";
+                        break;
+                    case "sports":
+                        iconUrl = "https://maps.google.com/mapfiles/ms/icons/blue-dot.png";
+                        break;
+                    case "rehab":
+                        iconUrl = "https://maps.google.com/mapfiles/ms/icons/green-dot.png";
+                        break;
+                }
+                
+                const marker = new google.maps.Marker({
+                    position: hospital.position,
+                    map: map,
+                    title: hospital.name,
+                    icon: {
+                        url: iconUrl,
+                        scaledSize: new google.maps.Size(40, 40)
+                    }
+                });
+                
+                markers.push(marker);
+                
+                marker.addListener("click", () => {
+                    infoWindow.setContent(`
+                        <div style="padding: 10px;">
+                            <h3 style="margin: 0 0 5px 0; color: ${hospital.type === 'emergency' ? '#EF4444' : hospital.type === 'sports' ? '#3B82F6' : '#10B981'}">
+                                ${hospital.name}
+                            </h3>
+                            <p style="margin: 0 0 5px 0;">${hospital.address}</p>
+                            <p style="margin: 0;">
+                                <i class="fas fa-phone"></i> ${hospital.phone}
+                            </p>
+                            <button onclick="alert('Emergency contact initiated with ${hospital.name}')" 
+                                    style="margin-top: 10px; padding: 5px 10px; background: #EF4444; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                <i class="fas fa-ambulance"></i> Emergency Contact
+                            </button>
+                        </div>
+                    `);
+                    infoWindow.open(map, marker);
+                });
+            });
+            
+            // Location button
+            document.getElementById("locateBtn").addEventListener("click", () => {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            const pos = {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude
+                            };
+                            
+                            // Add user location marker
+                            new google.maps.Marker({
+                                position: pos,
+                                map: map,
+                                title: "Your Location",
+                                icon: {
+                                    url: "https://maps.google.com/mapfiles/ms/icons/yellow-dot.png",
+                                    scaledSize: new google.maps.Size(40, 40)
+                                }
+                            });
+                            
+                            map.setCenter(pos);
+                            map.setZoom(14);
+                            
+                            // Find nearest hospital
+                            findNearestHospital(pos);
+                        },
+                        () => {
+                            alert("Error: The Geolocation service failed or your browser doesn't support it.");
+                        }
+                    );
+                } else {
+                    alert("Error: Your browser doesn't support geolocation.");
+                }
+            });
+        }
+        
+        function findNearestHospital(userPosition) {
+            let nearest = null;
+            let minDistance = Infinity;
+            
+            markers.forEach(marker => {
+                const distance = google.maps.geometry.spherical.computeDistanceBetween(
+                    userPosition,
+                    marker.getPosition()
+                );
+                
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    nearest = marker;
+                }
+            });
+            
+            if (nearest) {
+                infoWindow.setContent(`
+                    <div style="padding: 10px;">
+                        <h3 style="margin: 0 0 5px 0; color: #2563EB;">Nearest Hospital</h3>
+                        <p style="margin: 0 0 5px 0;">${nearest.title}</p>
+                        <p style="margin: 0 0 5px 0;">${Math.round(minDistance/1000)} km away</p>
+                        <button onclick="alert('Routing to ${nearest.title}')" 
+                                style="margin-top: 10px; padding: 5px 10px; background: #2563EB; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                            <i class="fas fa-directions"></i> Get Directions
+                        </button>
+                    </div>
+                `);
+                infoWindow.open(map, nearest);
+                
+                // Draw route line
+                new google.maps.Polyline({
+                    path: [userPosition, nearest.getPosition()],
+                    geodesic: true,
+                    strokeColor: "#2563EB",
+                    strokeOpacity: 1.0,
+                    strokeWeight: 3,
+                    map: map
+                });
+            }
+        }
+        
+        // Initialize map after everything loads
+        window.initMap = initMap;
+    </script>
+</body>
+</html>

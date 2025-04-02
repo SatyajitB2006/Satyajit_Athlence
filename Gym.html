@@ -1,0 +1,1711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportConnect | Find & Book Gyms Nationwide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --primary: #0066ff;
+            --secondary: #1a2b3d;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #28a745;
+            --warning: #ffc107;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 2rem 0;
+            position: relative;
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(26, 43, 61, 0.9);
+            z-index: 1000;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background-color: var(--secondary);
+            padding: 0.8rem 5%;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin-top: 60px;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .search-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(50px);
+        }
+
+        .search-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 1rem;
+        }
+
+        .search-group {
+            position: relative;
+        }
+
+        .search-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 2.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 2.3rem;
+            color: #777;
+        }
+
+        .search-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 0 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            align-self: flex-end;
+        }
+
+        .search-btn:hover {
+            background-color: #0052cc;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding-top: 6rem;
+            padding-bottom: 3rem;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        /* City Filter */
+        .city-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .city-btn {
+            padding: 0.6rem 1.5rem;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .city-btn:hover, .city-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Gym Grid */
+        .gym-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .gym-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .gym-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .gym-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .gym-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .gym-card:hover .gym-image img {
+            transform: scale(1.05);
+        }
+
+        .gym-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .gym-details {
+            padding: 1.5rem;
+        }
+
+        .gym-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .gym-location {
+            display: flex;
+            align-items: center;
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .gym-location i {
+            margin-right: 0.5rem;
+            color: var(--primary);
+        }
+
+        .gym-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            background: #f5f5f5;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+        }
+
+        .feature i {
+            margin-right: 0.3rem;
+            color: var(--primary);
+        }
+
+        .gym-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .gym-price span {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .view-btn {
+            display: block;
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .view-btn:hover {
+            background-color: #0052cc;
+        }
+
+        /* Gym Detail Page */
+        .gym-detail-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), var(--gym-bg-image);
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 8rem 0 4rem;
+            position: relative;
+        }
+
+        .gym-header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        .gym-title-large {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .gym-location-large {
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .gym-location-large i {
+            margin-right: 0.8rem;
+            color: var(--primary);
+        }
+
+        .gym-rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .stars {
+            color: var(--warning);
+            margin-right: 0.5rem;
+        }
+
+        .rating-count {
+            color: #ddd;
+        }
+
+        .gym-header-btns {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .header-btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0052cc;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .gym-detail-container {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 3rem;
+            padding: 3rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gym-main-content {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-heading {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary);
+            bottom: 0;
+            left: 0;
+        }
+
+        .gym-description {
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 2rem;
+        }
+
+        .facilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .facility-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .facility-icon {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(0, 102, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+
+        .facility-name {
+            font-weight: 500;
+        }
+
+        .trainers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .trainer-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+
+        .trainer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .trainer-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .trainer-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .trainer-info {
+            padding: 1.5rem;
+        }
+
+        .trainer-name {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+            color: var(--secondary);
+        }
+
+        .trainer-specialty {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .trainer-bio {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .gym-sidebar {
+            position: sticky;
+            top: 100px;
+        }
+
+        .booking-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .price-display {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .price-unit {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .booking-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.2);
+        }
+
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .time-slot {
+            padding: 0.5rem;
+            text-align: center;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .time-slot:hover {
+            background-color: #e0e0e0;
+        }
+
+        .time-slot.selected {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            background-color: #0052cc;
+        }
+
+        .opening-hours {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .hours-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .hours-table tr {
+            border-bottom: 1px solid #eee;
+        }
+
+        .hours-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .hours-table td {
+            padding: 0.8rem 0;
+        }
+
+        .day {
+            font-weight: 600;
+        }
+
+        .time {
+            text-align: right;
+            color: #666;
+        }
+
+        /* Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .gallery-item {
+            height: 200px;
+            overflow: hidden;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Reviews */
+        .reviews-container {
+            margin-top: 2rem;
+        }
+
+        .review-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.5rem;
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .review-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 1rem;
+        }
+
+        .review-author {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .review-date {
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        .review-stars {
+            color: var(--warning);
+            margin-bottom: 0.5rem;
+        }
+
+        .review-text {
+            line-height: 1.7;
+            color: #555;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary);
+            color: white;
+            padding: 5rem 5% 2rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+            max-width: 1200px;
+            margin: 0 auto 3rem;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-logo i {
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+
+        .footer-about p {
+            color: #bbb;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .footer-social a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h3, .footer-contact h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.8rem;
+        }
+
+        .footer-links h3::after, .footer-contact h3::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary);
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info i {
+            color: var(--primary);
+            margin-right: 1rem;
+            margin-top: 0.3rem;
+        }
+
+        .contact-text {
+            color: #bbb;
+            line-height: 1.6;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        .animate-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .animate-delay-1 {
+            animation-delay: 0.2s;
+        }
+
+        .animate-delay-2 {
+            animation-delay: 0.4s;
+        }
+
+        .animate-delay-3 {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .gym-detail-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .gym-sidebar {
+                position: static;
+            }
+            
+            .search-form {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background-color: var(--secondary);
+                flex-direction: column;
+                align-items: center;
+                padding-top: 2rem;
+                transition: all 0.5s ease;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li {
+                margin: 1rem 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .gym-header-btns {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <i class="fas fa-running"></i> SportConnect
+        </a>
+        <!-- <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#gyms">Find Gyms</a></li>
+            <li><a href="#">Cities</a></li>
+            <li><a href="#">Trainers</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul> -->
+        <button class="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- Gym Listing Page -->
+    <div id="gym-listing-page">
+        <header>
+            <div class="hero-content animate__animated animate__fadeIn">
+                <h1 class="animate-up">Find Your Perfect Gym</h1>
+                <p class="animate-up animate-delay-1">Discover and book sessions at top-rated gyms across the country. Filter by city, facilities, and more.</p>
+            </div>
+            <div class="search-box animate-up animate-delay-2">
+                <form class="search-form">
+                    <div class="search-group">
+                        <label for="search-location" class="search-label">Location</label>
+                        <i class="fas fa-map-marker-alt search-icon"></i>
+                        <input type="text" id="search-location" class="search-input" placeholder="Search by city or zip code">
+                    </div>
+                    <div class="search-group">
+                        <label for="search-facility" class="search-label">Facilities</label>
+                        <i class="fas fa-dumbbell search-icon"></i>
+                        <select id="search-facility" class="search-input">
+                            <option value="">All Facilities</option>
+                            <option value="pool">Swimming Pool</option>
+                            <option value="yoga">Yoga Studio</option>
+                            <option value="sauna">Sauna</option>
+                            <option value="pt">Personal Trainers</option>
+                            <option value="cardio">Cardio Equipment</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="search-btn">Search</button>
+                </form>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="container">
+                <section id="gyms">
+                    <div class="section-title">
+                        <h2>Featured Gyms</h2>
+                        <p>Browse our selection of premium fitness centers across multiple cities</p>
+                    </div>
+
+                    <div class="city-filter">
+                        <button class="city-btn active">All Cities</button>
+                        <button class="city-btn">Pune</button>
+                        <button class="city-btn">Amravati</button>
+                        <button class="city-btn">Akola</button>
+                        <button class="city-btn">Nagpur</button>
+                        <button class="city-btn">Mumbai</button>
+                        <button class="city-btn">Goa</button>
+                    </div>
+
+                    <div class="gym-grid">
+                        <!-- Gym 1 -->
+                        <div class="gym-card animate-up">
+                            <div class="gym-image">
+                                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="PowerHouse Gym">
+                                <span class="gym-badge">Popular</span>
+                            </div>
+                            <div class="gym-details">
+                                <h3 class="gym-title">PowerHouse Gym</h3>
+                                <div class="gym-location">
+                                    <i class="fas fa-map-marker-alt"></i> Pune
+                                </div>
+                                <div class="gym-features">
+                                    <div class="feature"><i class="fas fa-dumbbell"></i> Strength</div>
+                                    <div class="feature"><i class="fas fa-running"></i> Cardio</div>
+                                    <div class="feature"><i class="fas fa-swimming-pool"></i> Pool</div>
+                                </div>
+                                <div class="gym-price">$28 <span>/ session</span></div>
+                                <a href="gym-detail.html" class="view-btn">View Details</a>
+                            </div>
+                        </div>
+
+                        <!-- Gym 2 -->
+                        <div class="gym-card animate-up animate-delay-1">
+                            <div class="gym-image">
+                                <img src="https://images.unsplash.com/photo-1534258936925-c58bed479fcb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1631&q=80" alt="Iron Temple Fitness">
+                                <span class="gym-badge">24/7 Access</span>
+                            </div>
+                            <div class="gym-details">
+                                <h3 class="gym-title">Iron Temple Fitness</h3>
+                                <div class="gym-location">
+                                    <i class="fas fa-map-marker-alt"></i> Nagpur
+                                </div>
+                                <div class="gym-features">
+                                    <div class="feature"><i class="fas fa-dumbbell"></i> Strength</div>
+                                    <div class="feature"><i class="fas fa-running"></i> Cardio</div>
+                                    <div class="feature"><i class="fas fa-spa"></i> Sauna</div>
+                                </div>
+                                <div class="gym-price">$22 <span>/ session</span></div>
+                                <a href="gym-detail.html" class="view-btn">View Details</a>
+                            </div>
+                        </div>
+
+                        <!-- Gym 3 -->
+                        <div class="gym-card animate-up animate-delay-2">
+                            <div class="gym-image">
+                                <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Elite Performance">
+                                <span class="gym-badge">Premium</span>
+                            </div>
+                            <div class="gym-details">
+                                <h3 class="gym-title">Elite Performance</h3>
+                                <div class="gym-location">
+                                    <i class="fas fa-map-marker-alt"></i> Amravati
+                                </div>
+                                <div class="gym-features">
+                                    <div class="feature"><i class="fas fa-dumbbell"></i> Premium Equipment</div>
+                                    <div class="feature"><i class="fas fa-user-tie"></i> Personal Trainer</div>
+                                    <div class="feature"><i class="fas fa-wine-glass-alt"></i> Lounge</div>
+                                </div>
+                                <div class="gym-price">$45 <span>/ session</span></div>
+                                <a href="gym-detail.html" class="view-btn">View Details</a>
+                            </div>
+                        </div>
+
+                        <!-- Gym 4 -->
+                        <div class="gym-card animate-up">
+                            <div class="gym-image">
+                                <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1075&q=80" alt="Flex Fitness">
+                            </div>
+                            <div class="gym-details">
+                                <h3 class="gym-title">Flex Fitness</h3>
+                                <div class="gym-location">
+                                    <i class="fas fa-map-marker-alt"></i> Akola
+                                </div>
+                                <div class="gym-features">
+                                    <div class="feature"><i class="fas fa-dumbbell"></i> Strength</div>
+                                    <div class="feature"><i class="fas fa-running"></i> Cardio</div>
+                                    <div class="feature"><i class="fas fa-child"></i> Childcare</div>
+                                </div>
+                                <div class="gym-price">$18 <span>/ session</span></div>
+                                <a href="gym-detail.html" class="view-btn">View Details</a>
+                            </div>
+                        </div>
+
+                        <!-- Gym 5 -->
+                        <div class="gym-card animate-up animate-delay-1">
+                            <div class="gym-image">
+                                <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="BodyTech Gym">
+                                <span class="gym-badge">New</span>
+                            </div>
+                            <div class="gym-details">
+                                <h3 class="gym-title">BodyTech Gym</h3>
+                                <div class="gym-location">
+                                    <i class="fas fa-map-marker-alt"></i> Goa
+                                </div>
+                                <div class="gym-features">
+                                    <div class="feature"><i class="fas fa-dumbbell"></i> Strength</div>
+                                    <div class="feature"><i class="fas fa-running"></i> Cardio</div>
+                                    <div class="feature"><i class="fas fa-heartbeat"></i> Recovery</div>
+                                </div>
+                                <div class="gym-price">$25 <span>/ session</span></div>
+                                <a href="gym-detail.html" class="view-btn">View Details</a>
+                            </div>
+                        </div>
+
+                        <!-- Gym 6 -->
+                        <div class="gym-card animate-up animate-delay-2">
+                            <div class="gym-image">
+                                <img src="https://images.unsplash.com/photo-1556817411-31ae72fa3ea0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Zenith Athletics">
+                            </div>
+                            <div class="gym-details">
+                                <h3 class="gym-title">Zenith Athletics</h3>
+                                <div class="gym-location">
+                                    <i class="fas fa-map-marker-alt"></i> Mumbai
+                                </div>
+                                <div class="gym-features">
+                                    <div class="feature"><i class="fas fa-dumbbell"></i> Strength</div>
+                                    <div class="feature"><i class="fas fa-running"></i> Cardio</div>
+                                    <div class="feature"><i class="fas fa-basketball-ball"></i> Court</div>
+                                </div>
+                                <div class="gym-price">$20 <span>/ session</span></div>
+                                <a href="gym-detail.html" class="view-btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Gym Detail Page -->
+    <div id="gym-detail-page" style="display: none;">
+        <div class="gym-detail-header" style="--gym-bg-image: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80')">
+            <div class="gym-header-content">
+                <h1 class="gym-title-large">PowerHouse Gym</h1>
+                <div class="gym-location-large">
+                    <i class="fas fa-map-marker-alt"></i> 123 Fitness Street, Pune
+                </div>
+                <div class="gym-rating">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <div class="rating-count">142 reviews</div>
+                </div>
+                <div class="gym-header-btns">
+                    <a href="#booking" class="header-btn btn-primary">Book Now</a>
+                    <a href="#gallery" class="header-btn btn-outline">View Gallery</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="gym-detail-container">
+            <div class="gym-main-content">
+                <section id="about">
+                    <h2 class="section-heading">About This Gym</h2>
+                    <p class="gym-description">
+                        PowerHouse Gym is a premium fitness facility located in the heart of Pune City. 
+                        With over 15,000 square feet of training space, we offer state-of-the-art equipment, 
+                        expert trainers, and a variety of classes to help you achieve your fitness goals. 
+                        Our facility features a full-size swimming pool, sauna, and dedicated areas for 
+                        strength training, cardio, and functional fitness.
+                    </p>
+                    
+                    <h2 class="section-heading">Facilities & Amenities</h2>
+                    <div class="facilities-grid">
+                        <div class="facility-item">
+                            <div class="facility-icon">
+                                <i class="fas fa-dumbbell"></i>
+                            </div>
+                            <div class="facility-name">Strength Training</div>
+                        </div>
+                        <div class="facility-item">
+                            <div class="facility-icon">
+                                <i class="fas fa-running"></i>
+                            </div>
+                            <div class="facility-name">Cardio Equipment</div>
+                        </div>
+                        <div class="facility-item">
+                            <div class="facility-icon">
+                                <i class="fas fa-swimming-pool"></i>
+                            </div>
+                            <div class="facility-name">Swimming Pool</div>
+                        </div>
+                        <div class="facility-item">
+                            <div class="facility-icon">
+                                <i class="fas fa-spa"></i>
+                            </div>
+                            <div class="facility-name">Sauna</div>
+                        </div>
+                        <div class="facility-item">
+                            <div class="facility-icon">
+                                <i class="fas fa-shower"></i>
+                            </div>
+                            <div class="facility-name">Locker Rooms</div>
+                        </div>
+                        <div class="facility-item">
+                            <div class="facility-icon">
+                                <i class="fas fa-wifi"></i>
+                            </div>
+                            <div class="facility-name">Free WiFi</div>
+                        </div>
+                        <div class="facility-item">
+                            <div class="facility-icon">
+                                <i class="fas fa-tshirt"></i>
+                            </div>
+                            <div class="facility-name">Towels Provided</div>
+                        </div>
+                        <div class="facility-item">
+                            <div class="facility-icon">
+                                <i class="fas fa-car"></i>
+                            </div>
+                            <div class="facility-name">Parking Available</div>
+                        </div>
+                    </div>
+
+                    <h2 class="section-heading">Our Trainers</h2>
+                    <div class="trainers-grid">
+                        <div class="trainer-card">
+                            <div class="trainer-image">
+                                <img src="https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" alt="Trainer Marcus Johnson">
+                            </div>
+                            <div class="trainer-info">
+                                <h3 class="trainer-name">Marcus Johnson</h3>
+                                <span class="trainer-specialty">Strength & Conditioning</span>
+                                <p class="trainer-bio">15+ years experience training elite athletes. NASM certified with expertise in powerlifting and functional movement.</p>
+                            </div>
+                        </div>
+                        <div class="trainer-card">
+                            <div class="trainer-image">
+                                <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Trainer Sarah Chen">
+                            </div>
+                            <div class="trainer-info">
+                                <h3 class="trainer-name">Sarah Chen</h3>
+                                <span class="trainer-specialty">Functional Fitness</span>
+                                <p class="trainer-bio">CrossFit Level 3 coach specializing in movement mechanics and injury prevention.</p>
+                            </div>
+                        </div>
+                        <div class="trainer-card">
+                            <div class="trainer-image">
+                                <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Trainer David Rodriguez">
+                            </div>
+                            <div class="trainer-info">
+                                <h3 class="trainer-name">David Rodriguez</h3>
+                                <span class="trainer-specialty">Olympic Weightlifting</span>
+                                <p class="trainer-bio">USA Weightlifting certified coach with national champions under his guidance.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <section id="gallery">
+                        <h2 class="section-heading">Gallery</h2>
+                        <div class="gallery-grid">
+                            <div class="gallery-item">
+                                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Gym Facility">
+                            </div>
+                            <div class="gallery-item">
+                                <img src="https://images.unsplash.com/photo-1534258936925-c58bed479fcb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1631&q=80" alt="Gym Facility">
+                            </div>
+                            <div class="gallery-item">
+                                <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Gym Facility">
+                            </div>
+                            <div class="gallery-item">
+                                <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1075&q=80" alt="Gym Facility">
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="reviews">
+                        <h2 class="section-heading">Member Reviews</h2>
+                        <div class="reviews-container">
+                            <div class="review-card">
+                                <div class="review-header">
+                                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Alex Morgan" class="review-avatar">
+                                    <div>
+                                        <div class="review-author">Alex Morgan</div>
+                                        <div class="review-date">2 weeks ago</div>
+                                    </div>
+                                </div>
+                                <div class="review-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <p class="review-text">
+                                    PowerHouse Gym has transformed my training completely. The facilities are world-class and the trainers' expertise helped me shave seconds off my sprint time. The booking system makes it so easy to schedule sessions around my competition schedule.
+                                </p>
+                            </div>
+                            <div class="review-card">
+                                <div class="review-header">
+                                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Jamie Lee" class="review-avatar">
+                                    <div>
+                                        <div class="review-author">Jamie Lee</div>
+                                        <div class="review-date">1 month ago</div>
+                                    </div>
+                                </div>
+                                <div class="review-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <p class="review-text">
+                                    As a busy executive, I need my workouts to be efficient and effective. PowerHouse's booking system ensures I never waste time waiting for equipment, and their recovery facilities help me manage stress. I've never been in better shape!
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+                </section>
+            </div>
+
+            <div class="gym-sidebar">
+                <div class="booking-card" id="booking">
+                    <div class="price-display">$28 <span class="price-unit">per session</span></div>
+                    <form class="booking-form">
+                        <div class="form-group">
+                            <label for="booking-date" class="form-label">Select Date</label>
+                            <input type="date" id="booking-date" class="form-control" min="">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Available Time Slots</label>
+                            <div class="time-slots">
+                                <div class="time-slot">6:00 AM</div>
+                                <div class="time-slot">7:00 AM</div>
+                                <div class="time-slot">8:00 AM</div>
+                                <div class="time-slot">9:00 AM</div>
+                                <div class="time-slot">10:00 AM</div>
+                                <div class="time-slot">4:00 PM</div>
+                                <div class="time-slot">5:00 PM</div>
+                                <div class="time-slot">6:00 PM</div>
+                                <div class="time-slot">7:00 PM</div>
+                                <div class="time-slot">8:00 PM</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="trainer-select" class="form-label">Preferred Trainer (Optional)</label>
+                            <select id="trainer-select" class="form-control">
+                                <option value="">Any Available</option>
+                                <option value="Marcus Johnson">Marcus Johnson</option>
+                                <option value="Sarah Chen">Sarah Chen</option>
+                                <option value="David Rodriguez">David Rodriguez</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="full-name" class="form-label">Full Name</label>
+                            <input type="text" id="full-name" class="form-control" placeholder="Your full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" class="form-control" placeholder="Your email address">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" id="phone" class="form-control" placeholder="Your phone number">
+                        </div>
+                        <button type="submit" class="submit-btn">Book Now</button>
+                    </form>
+                </div>
+
+                <div class="opening-hours">
+                    <h3 class="section-heading">Opening Hours</h3>
+                    <table class="hours-table">
+                        <tr>
+                            <td class="day">Monday</td>
+                            <td class="time">5:00 AM - 11:00 PM</td>
+                        </tr>
+                        <tr>
+                            <td class="day">Tuesday</td>
+                            <td class="time">5:00 AM - 11:00 PM</td>
+                        </tr>
+                        <tr>
+                            <td class="day">Wednesday</td>
+                            <td class="time">5:00 AM - 11:00 PM</td>
+                        </tr>
+                        <tr>
+                            <td class="day">Thursday</td>
+                            <td class="time">5:00 AM - 11:00 PM</td>
+                        </tr>
+                        <tr>
+                            <td class="day">Friday</td>
+                            <td class="time">5:00 AM - 10:00 PM</td>
+                        </tr>
+                        <tr>
+                            <td class="day">Saturday</td>
+                            <td class="time">7:00 AM - 9:00 PM</td>
+                        </tr>
+                        <tr>
+                            <td class="day">Sunday</td>
+                            <td class="time">7:00 AM - 8:00 PM</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-container">
+            <div class="footer-about">
+                <div class="footer-logo">
+                    <i class="fas fa-running"></i> SportConnect
+                </div>
+                <p>SportConnect is a premium platform connecting athletes with top gyms and fitness facilities across the country. Our mission is to make fitness accessible to everyone.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#gyms">Find Gyms</a></li>
+                    <li><a href="#">Cities</a></li>
+                    <li><a href="#">Trainers</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h3>Contact Us</h3>
+                <div class="contact-info">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p class="contact-text">123 Fitness Avenue, Sport City, SC 90210</p>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-phone-alt"></i>
+                    <p class="contact-text">+1 (555) 123-4567</p>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-envelope"></i>
+                    <p class="contact-text">info@sportconnect.com</p>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-clock"></i>
+                    <p class="contact-text">Mon-Fri: 9:00 AM - 6:00 PM</p>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 SportConnect. All Rights Reserved. Designed for athletes.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Smooth Scrolling for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                if(this.getAttribute('href') === '#') return;
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if(target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if(navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+                }
+            });
+        });
+
+        // City Filter
+        const cityButtons = document.querySelectorAll('.city-btn');
+        cityButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                cityButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                // In a real app, you would filter gyms by city here
+            });
+        });
+
+        // Set minimum date to today for booking
+        const today = new Date();
+        const dd = String(today.getDate()).padStart(2, '0');
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const yyyy = today.getFullYear();
+        const bookingDateInput = document.getElementById('booking-date');
+        if(bookingDateInput) {
+            bookingDateInput.min = `${yyyy}-${mm}-${dd}`;
+        }
+
+        // Time slot selection
+        const timeSlots = document.querySelectorAll('.time-slot');
+        timeSlots.forEach(slot => {
+            slot.addEventListener('click', () => {
+                timeSlots.forEach(s => s.classList.remove('selected'));
+                slot.classList.add('selected');
+            });
+        });
+
+        // Form submission
+        const bookingForm = document.querySelector('.booking-form');
+        if(bookingForm) {
+            bookingForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                if(!document.getElementById('booking-date').value) {
+                    alert('Please select a date for your session');
+                    return;
+                }
+                
+                const selectedTime = document.querySelector('.time-slot.selected');
+                if(!selectedTime) {
+                    alert('Please select a time slot');
+                    return;
+                }
+                
+                if(!document.getElementById('full-name').value) {
+                    alert('Please enter your full name');
+                    return;
+                }
+                
+                if(!document.getElementById('email').value) {
+                    alert('Please enter your email');
+                    return;
+                }
+                
+                // In a real app, you would send this data to your backend
+                alert(`Booking confirmed!\n\nGym: PowerHouse Gym\nDate: ${document.getElementById('booking-date').value}\nTime: ${selectedTime.textContent}\n\nWe've sent confirmation details to your email.`);
+            });
+        }
+
+        // Animation on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.animate-up');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                
+                if(elementPosition < screenPosition) {
+                    element.style.animation = 'fadeInUp 1s ease forwards';
+                }
+            });
+        }
+
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+
+        // For demo purposes - switch between listing and detail view
+        const viewButtons = document.querySelectorAll('.view-btn');
+        const gymListingPage = document.getElementById('gym-listing-page');
+        const gymDetailPage = document.getElementById('gym-detail-page');
+
+        viewButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                gymListingPage.style.display = 'none';
+                gymDetailPage.style.display = 'block';
+                window.scrollTo(0, 0);
+            });
+        });
+
+        // In a real app, you would have proper routing between pages
+    </script>
+</body>
+</html>
